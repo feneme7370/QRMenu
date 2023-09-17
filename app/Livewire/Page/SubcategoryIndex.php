@@ -13,7 +13,7 @@ class SubcategoryIndex extends Component
     use WithPagination;
     
     // variables de filtros
-    public $active = true, $search, $sortBy = 'id', $sortAsc = false;
+    public $active = true, $search = '', $sortBy = 'id', $sortAsc = false;
 
     // variables para modales
     public $showActionModal = false;
@@ -112,7 +112,10 @@ class SubcategoryIndex extends Component
     // boton de guardar o editar
     public function save() {
 
-        if($this->countSubcategories()){return;}
+        if(!$this->subcategory){
+            if($this->countSubcategories()){return;}
+        }
+        
     
         $this->user_id = auth()->user()->id;
         $this->company_id = auth()->user()->company_id;

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Page\CategoryController;
 use App\Http\Controllers\Page\CompanyController;
+use App\Http\Controllers\Page\ConfigController;
 use App\Http\Controllers\Page\DashboardController;
 use App\Http\Controllers\Page\ProductController;
 use App\Http\Controllers\Page\SubcategoryController;
@@ -42,6 +43,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified', '
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     // Route::get('/categories/{category}/subcategories/{subcategory}/product', [ProductController::class, 'show'])->name('product.show');
     Route::get('/suggesteds', [SuggestedController::class, 'index'])->name('suggesteds.index');
+    Route::get('/config/{company}', [ConfigController::class, 'index'])->name('config.index');
 });
 
 // Route::view('/puerto_tabla', 'livewire.site.puertotabla.home-index');

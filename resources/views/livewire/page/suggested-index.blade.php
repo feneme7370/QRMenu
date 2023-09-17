@@ -27,31 +27,22 @@
         wire:click="save" 
         wire:loading.attr="disabled" 
         autofocus>
+        @slot('icon')
             <x-sistem.icons.hi-plus-circle/>
+        @endslot
         </x-sistem.buttons.primary-btn>
     </div>
 
     {{-- listado --}}
-    <div class="mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-
-            @foreach ($suggesteds as $item)
-            <!-- Ejemplo de una tarjeta -->
-
-            <x-page.suggested-list :item="$item" />
-            <!-- Agrega más tarjetas aquí -->
-
-            @endforeach
-        </div>
-    </div>
+    <x-page.suggested-table :suggesteds="$suggesteds" />
 
     {{-- Paginacion --}}
     <div class="mt-4">
-        {{ $suggesteds->links() }}
+        {{ $suggesteds->onEachSide(1)->links('pagination::windmill-pagination') }}
     </div>
 
     <!-- Modal para borrar -->
-    <x-dialog-modal wire:model="showDeleteModal">
+    {{-- <x-dialog-modal wire:model="showDeleteModal">
         <x-slot name="title">
             {{ __('Borrar') }}
         </x-slot>
@@ -70,10 +61,10 @@
                 {{ __('Borrar') }}
             </x-sistem.buttons.delete-btn>
         </x-slot>
-    </x-dialog-modal>
+    </x-dialog-modal> --}}
 
     <!-- Modal para crear -->
-    <x-dialog-modal wire:model="showActionModal">
+    {{-- <x-dialog-modal wire:model="showActionModal">
         <x-slot name="title">
             {{ __('Agregar') }}
         </x-slot>
@@ -96,15 +87,11 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-sistem.buttons.normal-btn wire:click="$set('showActionModal', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-sistem.buttons.normal-btn>
+            <x-sistem.buttons.normal-btn wire:click="$set('showActionModal', false)" wire:loading.attr="disabled" title="Cancelar" />
 
-            <x-sistem.buttons.primary-btn type="submit" class="ml-3" wire:loading.attr="disabled" autofocus>
-                {{ __('Guardar') }}
-            </x-sistem.buttons.primary-btn>
+            <x-sistem.buttons.primary-btn type="submit" class="ml-3" wire:loading.attr="disabled" title="Guardar" autofocus/>
         </x-slot>
-    </x-dialog-modal>
+    </x-dialog-modal> --}}
 
 
 </div>

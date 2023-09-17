@@ -13,7 +13,7 @@ class CategoryIndex extends Component
     use WithPagination;
     
     // variables de filtros
-    public $active = true, $search, $sortBy = 'id', $sortAsc = false;
+    public $active = true, $search = '', $sortBy = 'id', $sortAsc = false;
 
     // variables para modales
     public $showActionModal = false;
@@ -108,7 +108,10 @@ class CategoryIndex extends Component
     // boton de guardar o editar
     public function save() {
 
-        if($this->countCategories()){return;}
+        if(!$this->category){
+            if($this->countCategories()){return;}
+        }
+        
     
         $this->user_id = auth()->user()->id;
         $this->company_id = auth()->user()->company_id;

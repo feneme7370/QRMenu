@@ -9,29 +9,23 @@
             title="Agregar" 
             wire:click="createActionModal" 
             wire:loading.attr="disabled" >
-        <x-sistem.icons.hi-plus-circle/>
-    </x-sistem.menus.title-and-btn>
+            @slot('icon')
+                <x-sistem.icons.hi-plus-circle/>
+            @endslot
+        </x-sistem.buttons.primary-btn>
     </x-sistem.menus.title-and-btn>
 
     {{-- input buscador y filtro de activos --}}
     <x-sistem.filter.search-active />
 
     {{-- listado --}}
-    <div class="mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+ 
 
-            @foreach ($subcategories as $item)
-            <!-- Ejemplo de una tarjeta -->
-                <x-page.subcategory-list :item="$item" />
-            <!-- Agrega más tarjetas aquí -->
-
-            @endforeach
-        </div>
-    </div>
+    <x-page.subcategory-table :subcategories="$subcategories" />
 
     {{-- Paginacion --}}
     <div class="mt-4">
-        {{ $subcategories->links() }}
+        {{ $subcategories->onEachSide(1)->links('pagination::windmill-pagination') }}
     </div>
 
     <!-- Modal para borrar -->
@@ -45,21 +39,17 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-sistem.buttons.normal-btn wire:click="$set('showDeleteModal', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-sistem.buttons.normal-btn>
+            <x-sistem.buttons.normal-btn wire:click="$set('showDeleteModal', false)" wire:loading.attr="disabled" title="Cancelar" />
 
             <x-sistem.buttons.delete-btn class="ml-3" wire:click="deleteSubcategory" wire:loading.attr="disabled"
-                autofocus>
-                {{ __('Borrar') }}
-            </x-sistem.buttons.delete-btn>
+            title="Borrar" autofocus/>
         </x-slot>
     </x-dialog-modal>
 
     <!-- Modal para crear y editar -->
     <x-dialog-modal wire:model="showActionModal">
         <x-slot name="title">
-            {{ __('Agregar') }}
+            {{ __($subcategory ? 'Editar' : 'Agregar') }}
         </x-slot>
 
         <x-slot name="content">
@@ -67,8 +57,8 @@
 
             <form {{-- method="POST" --}} class="grid gap-3 mt-5">
 
-                <x-sistem.forms.label-form for="name" value="{{ __('Nombre de subcategoria') }}" />
-                <x-sistem.forms.input-form id="name" type="name" placeholder="{{ __('Nombre') }}" wire:model="name"
+                <x-sistem.forms.label-form for="name" value="{{ __('Nombre') }}" />
+                <x-sistem.forms.input-form id="name" type="name" placeholder="{{ __('Pizzas, Gaseosas, Vinos, Etc.') }}" wire:model="name"
                     autofocus />
                 <x-sistem.forms.input-error for="name" />
 
@@ -80,8 +70,8 @@
                 </x-sistem.forms.select-form>
                 <x-sistem.forms.input-error for="category_id" />
                 
-                <x-sistem.forms.label-form for="description" value="{{ __('Descripcion de subcategoria') }}" />
-                <x-sistem.forms.textarea-form id="description" placeholder="{{ __('Descripcion') }}"
+                <x-sistem.forms.label-form for="description" value="{{ __('Descripcion') }}" />
+                <x-sistem.forms.textarea-form id="description" placeholder="{{ __('Pizzas de todas las variedades') }}"
                     wire:model="description" />
                 <x-sistem.forms.input-error for="description" />
 
@@ -95,13 +85,9 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-sistem.buttons.normal-btn wire:click="$set('showActionModal', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-sistem.buttons.normal-btn>
+            <x-sistem.buttons.normal-btn wire:click="$set('showActionModal', false)" wire:loading.attr="disabled" title="Cancelar" />
 
-            <x-sistem.buttons.primary-btn wire:click="save" class="ml-3" wire:loading.attr="disabled" autofocus>
-                {{ __('Guardar') }}
-            </x-sistem.buttons.primary-btn>
+            <x-sistem.buttons.primary-btn wire:click="save" class="ml-3" wire:loading.attr="disabled" title="{{$subcategory ? 'Actualizar' : 'Guardar'}}" autofocus/>
         </x-slot>
     </x-dialog-modal>
 

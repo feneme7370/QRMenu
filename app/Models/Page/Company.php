@@ -20,7 +20,9 @@ class Company extends Model
         'social',
         'description',
         'status',
-        'membership_id'
+        'membership_id',
+        'image',
+        'title',
     ];
 
     public function membership()

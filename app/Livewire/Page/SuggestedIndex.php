@@ -21,7 +21,7 @@ class SuggestedIndex extends Component
     public $company_id;
 
     // variables principales
-    public $suggested, $suggestedId;
+    public $suggested, $suggestedId, $suggested_id;
 
     // contar elementos de membresia
     public function countSuggesteds() {

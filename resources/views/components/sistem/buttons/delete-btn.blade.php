@@ -1,5 +1,6 @@
-@props(['title' => ''])
+@props(['title' => '', 'icon' => ''])
 
-<button {{ $attributes->merge(['type' => 'button', 'class' => 'inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150']) }}>
-    {{ $title }}{{$slot}}
+<button {{ $attributes->merge(['type' => 'button', 'class' => 'flex items-center justify-center px-4 py-2 gap-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red focus:ring focus:ring-red-950 focus:ring-offset-2']) }}>
+    {{$icon}}
+    <span>{{ $title }}</span>
 </button>

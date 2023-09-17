@@ -1,8 +1,9 @@
 <x-app-layout>
 
-    <h1 class="mt-8 text-2xl font-medium text-gray-900">
-        Bienvenido {{auth()->user()->name}}
-    </h1>
+    {{-- titulo y boton --}}
+    <x-sistem.menus.title-and-btn title="Bienvenido {{auth()->user()->name}}">
+        <span>{{auth()->user()->company->name}}</span>
+    </x-sistem.menus.title-and-btn>
 
     <div class="grid gap-3 mb-8 md:grid-cols-2 xl:grid-cols-4">
         <x-sistem.cards.mini-date                     

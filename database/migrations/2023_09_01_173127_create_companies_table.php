@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('social')->nullable();
             $table->longText('description')->nullable();
             $table->tinyInteger('status')->nullable()->default(1);
+            $table->string('image')->nullable();
             $table->foreignId('membership_id')->constrained()->onUpdate('cascade')->restrictOnDelete();
             $table->timestamps();
         });

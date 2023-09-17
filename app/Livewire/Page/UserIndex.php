@@ -13,7 +13,7 @@ class UserIndex extends Component
 {
     use WithPagination;
     
-    public $active = true, $search, $sortBy = 'id', $sortAsc = false;
+    public $active = true, $search = '', $sortBy = 'id', $sortAsc = false;
 
     public $showActionModal = false;
     public $showDeleteModal = false;

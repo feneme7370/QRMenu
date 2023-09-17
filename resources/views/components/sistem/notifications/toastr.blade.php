@@ -1,4 +1,4 @@
-@props(['title' => false, 'messageSuccess' => false, 'messageError' => false])
+@props(['title' => '', 'messageSuccess' => '', 'messageError' => ''])
 
 @if(session()->has('messageSuccess'))
     <script>

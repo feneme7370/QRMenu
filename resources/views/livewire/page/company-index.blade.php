@@ -9,8 +9,10 @@
             title="Agregar" 
             wire:click="createActionModal" 
             wire:loading.attr="disabled">
-        <x-sistem.icons.hi-plus-circle/>
-    </x-sistem.menus.title-and-btn>
+            @slot('icon')
+                <x-sistem.icons.hi-plus-circle/>
+            @endslot
+        </x-sistem.buttons.primary-btn>
 
     </x-sistem.menus.title-and-btn>
 
@@ -34,7 +36,7 @@
 
     {{-- Paginacion --}}
     <div class="mt-4">
-        {{ $companies->links() }}
+        {{ $companies->onEachSide(1)->links('pagination::windmill-pagination') }}
     </div>
 
     <!-- Modal para borrar -->
@@ -48,14 +50,10 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-sistem.buttons.normal-btn wire:click="$set('showDeleteModal', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-sistem.buttons.normal-btn>
+            <x-sistem.buttons.normal-btn wire:click="$set('showDeleteModal', false)" wire:loading.attr="disabled" title="Cancelar" />
 
             <x-sistem.buttons.delete-btn class="ml-3" wire:click="deleteCompany()" wire:loading.attr="disabled"
-                autofocus>
-                {{ __('Borrar') }}
-            </x-sistem.buttons.delete-btn>
+            title="Borrar" autofocus/>
         </x-slot>
     </x-dialog-modal>
 
@@ -123,13 +121,8 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-sistem.buttons.normal-btn wire:click="$set('showActionModal', false)" wire:loading.attr="disabled">
-                {{ __('Cancelar') }}
-            </x-sistem.buttons.normal-btn>
-
-            <x-sistem.buttons.primary-btn wire:click="save" class="ml-3" wire:loading.attr="disabled" autofocus>
-                {{ __('Guardar') }}
-            </x-sistem.buttons.primary-btn>
+            <x-sistem.buttons.normal-btn wire:click="$set('showActionModal', false)" wire:loading.attr="disabled" title="Cancelar" />>
+            <x-sistem.buttons.primary-btn wire:click="save" class="ml-3" wire:loading.attr="disabled" title="Guardar" autofocus />
         </x-slot>
     </x-dialog-modal>
 

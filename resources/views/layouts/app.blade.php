@@ -10,7 +10,10 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        {{-- <link href="{{ asset('lib/toastr/toastr.min.css') }}" rel="stylesheet" /> --}}
+        {{-- <link href="{{ asset('lib/toastr/toastr.min.css') }}" rel="stylesheet" />
+        <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script> 
+        <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script> --}}
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,10 +21,10 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans" x-data="data()">
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100">
+        {{-- <div class="min-h-screen bg-gray-100"> --}}
 
             {{-- @livewire('navigation-menu') --}}
             @include('layouts.sidebarFlowtrail')
@@ -51,13 +54,12 @@
         </div>
 
 
+
         @stack('modals')
         
         @livewireScripts
+        <script src="{{asset('public/assets/js/focus-trap.js')}}"></script>
+        <script src="{{asset('public/assets/js/init-alpine.js')}}"></script>
 
-        {{-- <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script> --}}
-
-        
     </body>
 </html>

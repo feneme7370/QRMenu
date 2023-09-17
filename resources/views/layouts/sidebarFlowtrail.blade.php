@@ -24,7 +24,15 @@
                         />
                     </div>
                     <div>
-    
+          
+                        <x-sistem.navlinks.navlink-sidebar-flowtrail
+                            href="{{ route('dashboard.index') }}"
+                            :active="request()->routeIs('dashboard.index')"
+                            title="Dashboard"
+                        >
+                            <x-sistem.icons.hi-home/>
+                        </x-sistem.navlinks.navlink-sidebar-flowtrail>
+
                         @if (auth()->user()->role_id == 1)
                             <x-sistem.navlinks.navlink-sidebar-flowtrail
                                 href="{{ route('companies.index') }}"
@@ -41,13 +49,13 @@
                                 <x-sistem.icons.hi-users/>
                             </x-sistem.navlinks.navlink-sidebar-flowtrail>
                         @endif
-        
+
                         <x-sistem.navlinks.navlink-sidebar-flowtrail
-                            href="{{ route('dashboard.index') }}"
-                            :active="request()->routeIs('dashboard.index')"
-                            title="Dashboard"
+                            href="{{ route('config.index', auth()->user()->company_id) }}"
+                            :active="request()->routeIs('config.index')"
+                            title="Configuracion"
                         >
-                            <x-sistem.icons.hi-home/>
+                            <x-sistem.icons.hi-cog-8-tooth/>
                         </x-sistem.navlinks.navlink-sidebar-flowtrail>
 
                         <x-sistem.navlinks.navlink-sidebar-flowtrail

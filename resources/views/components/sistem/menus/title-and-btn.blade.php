@@ -1,9 +1,8 @@
 @props(['title'])
 
-<div class="mt-1 mb-3 text-2xl flex justify-between items-center">
-    <span>
+<div class="px-4 py-3 mb-8 flex flex-col md:flex-row justify-between items-center bg-white rounded-lg shadow-md dark:bg-gray-800 gap-5">
+    <p class="text-2xl text-gray-600 dark:text-gray-400">
         {{$title}}
-    </span>
-
+    </p>
     {{$slot}}
 </div>
