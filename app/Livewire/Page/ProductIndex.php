@@ -6,11 +6,16 @@ use Livewire\Component;
 use App\Models\Page\Product;
 use Livewire\WithPagination;
 use Livewire\Attributes\Rule;
+use Livewire\WithFileUploads;
 use App\Models\Page\Subcategory;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Exists;
 
 class ProductIndex extends Component
 {
     use WithPagination;
+    use WithFileUploads;
     
     // variables de filtros
     public $active = true, $search = '', $sortBy = 'id', $sortAsc = false;
@@ -35,6 +40,11 @@ class ProductIndex extends Component
     public $user_id;
     #[Rule('required|numeric')]
     public $company_id;
+
+    #[Rule('nullable|string|max:3096')]
+    public $image = '';
+    #[Rule('nullable|image|max:3096')]
+    public $image_nueva;
 
     // variables principales
     public $product, $productId;
@@ -69,7 +79,27 @@ class ProductIndex extends Component
         'status' => 'estado',
         'subcategory_id' => 'categoria',
         'price' => 'precio',
+        'image' => 'imagen de producto',
     ];
+
+    public function deleteImage(){
+        if(Storage::exists('public/product/'.$this->image)){
+            Storage::delete('public/product/'.$this->image);
+        }
+    }
+    public function uploadImage(){
+        if($this->image_nueva){
+            $this->deleteImage();
+            $name = time().'_'.auth()->user()->company_id.'.jpg';
+            $image = Image::make($this->image_nueva);
+            $image->resize(600, null, function ($constraint) {
+                $constraint->aspectRatio();
+        });
+            $image->save(public_path('storage/product/'.$name));
+            // $this->image_nueva->storeAs('public/image/', $name);
+            $this->image = $name;
+        }
+    }
 
     // abrir modal y recibir id para borrar
     public function openDeleteModal($id){
@@ -78,9 +108,13 @@ class ProductIndex extends Component
         $this->productId = $id;
     }
 
-    // eliminar desde el modal de confirmacion
+    // eliminar desde el modal de confirmacion el producto
     public function deleteProduct() {
         $product = Product::findOrFail($this->productId);
+
+        $this->image = $product['image'];
+        $this->deleteImage();
+
         $product->delete();
         session()->flash('messageSuccess', 'Registro eliminado');
         $this->reset();
@@ -88,18 +122,26 @@ class ProductIndex extends Component
         $this->showDeleteModal = false;
     }
 
+    // eliminar solo imagen del producto en editar
+    public function deleteImageEdit() {
+        $this->deleteImage();
+        $this->image = '';
+    }
+
     // mostrar modal para confirmar crear
     public function createActionModal() {
         if($this->wihtoutCompany()){return;}
         if($this->countProducts()){return;}
         $this->reset(['subcategory', 'subcategoryId']);
-        $this->reset(['name', 'description', 'status', 'subcategory_id', 'price', 'user_id', 'company_id']);
+        $this->reset(['name', 'description', 'status', 'subcategory_id', 'price', 'image', 'image_nueva', 'user_id', 'company_id']);
         $this->status = true;
         $this->showActionModal = true;
     }
 
     // // mostrar modal para confirmar editar
     public function editActionModal(Product $product) {
+        $this->reset(['subcategory', 'subcategoryId']);
+        $this->reset(['name', 'description', 'status', 'subcategory_id', 'price', 'image', 'image_nueva', 'user_id', 'company_id']);
         if($this->wihtoutCompany()){return;}
         $this->product = $product;
         $this->name = $product['name'];
@@ -107,7 +149,7 @@ class ProductIndex extends Component
         $this->subcategory_id = $product['subcategory_id'];
         $this->price = $product['price'];
         $this->status = $product['status'] == '1' ? true : false;
-        
+        $this->image = $product['image'];
         $this->showActionModal = true;
     }
 
@@ -124,23 +166,29 @@ class ProductIndex extends Component
         $this->status = $this->status ? '1' : '0';
 
         $this->validate();
+
+        $this->uploadImage();
         
         if( isset( $this->product['id'])) {
 
             $this->product->update(
-                $this->only(['name', 'description', 'status', 'subcategory_id', 'price', 'user_id', 'company_id'])
+                $this->only(['name', 'description', 'status', 'subcategory_id', 'price', 'image', 'user_id', 'company_id'])
             );
+            $this->reset(['subcategory', 'subcategoryId']);
+            $this->reset(['name', 'description', 'status', 'subcategory_id', 'price', 'image', 'image_nueva', 'user_id', 'company_id']);
             session()->flash('messageSuccess', 'Actualizado');
 
         } else {
             Product::create(
-                $this->only(['name', 'description', 'status', 'subcategory_id', 'price', 'user_id', 'company_id'])
+                $this->only(['name', 'description', 'status', 'subcategory_id', 'price', 'image', 'user_id', 'company_id'])
             );
             session()->flash('messageSuccess', 'Guardado');
         }
 
         $this->showActionModal = false;
     }
+
+
 
     public function render()
     {

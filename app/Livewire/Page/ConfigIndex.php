@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Page;
 
-use Livewire\Attributes\Rule;
-use App\Models\Page\Company;
-use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Illuminate\Http\File;
+use App\Models\Page\Company;
+use Livewire\Attributes\Rule;
 use Livewire\WithFileUploads;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ConfigIndex extends Component
 {
@@ -17,7 +18,7 @@ class ConfigIndex extends Component
         // reglas de validacion
         #[Rule('required|string|min:4')]
         public $name;
-        #[Rule('required|email|min:4')]
+        #[Rule('nullable|email|min:4')]
         public $email;
         #[Rule('nullable|numeric|min:4')]
         public $phone;
@@ -31,7 +32,7 @@ class ConfigIndex extends Component
         public $description;
         #[Rule('nullable|string|max:2048')]
         public $image;
-        #[Rule('nullable|image|max:2048')]
+        #[Rule('nullable|image|max:3096')]
         public $image_nueva;
     
         // variables principales
@@ -72,14 +73,20 @@ class ConfigIndex extends Component
     
         // boton de guardar o editar
         public function save() {
-            if($this->wihtoutCompany()){return;}
+            if(!auth()->user()->role_id == '1'){
+                if($this->wihtoutCompany()){return;}
+            }
     
             $this->validate();
-            
             if($this->image_nueva){
-                Storage::delete('public/image/'.$this->image);
+                Storage::delete('public/portada/'.$this->image);
                 $name = time().'_'.auth()->user()->company_id.'.jpg';
-                $this->image_nueva->storeAs('public/image/', $name);
+                $image = Image::make($this->image_nueva);
+                $image->resize(600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+            });
+                $image->save(public_path('storage/portada/'.$name));
+                // $this->image_nueva->storeAs('public/image/', $name);
                 $this->image = $name;
             }
 

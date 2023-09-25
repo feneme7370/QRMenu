@@ -5,6 +5,15 @@
         <span>{{auth()->user()->company->name}}</span>
     </x-sistem.menus.title-and-btn>
 
+    <div class="w-full md:w-96 h-64 mx-auto mb-5 bg-gray-200 relative">
+        @if (auth()->user()->company->image)
+            <img src="{{asset('storage/portada/'.auth()->user()->company->image)}}" alt="imagen portada" class="w-full h-full object-cover rounded-sm" />
+        @else
+            <img class="w-full h-full object-cover rounded-sm" src="{{asset('storage/sistem/withoutImage.jpg')}}">
+        @endif
+        <p class="absolute top-0 right-0 p-2 bg-black text-white">Portada</p>
+    </div>
+      
     <div class="grid gap-3 mb-8 md:grid-cols-2 xl:grid-cols-4">
         <x-sistem.cards.mini-date                     
             href="{{route('categories.index')}}"

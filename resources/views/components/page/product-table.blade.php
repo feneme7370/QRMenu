@@ -7,7 +7,7 @@
             <th class="px-4 py-3">Productos</th>
             <th class="px-4 py-3">Precio</th>
             <th class="px-4 py-3">Estado</th>
-            <th class="px-4 py-3">Actiones</th>
+            <th class="px-4 py-3">Acciones</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -35,7 +35,7 @@
                 </div>
               </td>
               <td class="px-4 py-3 text-sm">
-                $ {{ number_format($item->price, 2,",",".") }}
+                ${{ number_format($item->price, 2,",",".") }}
               </td>
               <td class="px-4 py-3 text-xs">
                 <span class="px-2 py-1 font-semibold leading-tight {{$item->status == '1' ? 'text-green-700 bg-green-100 dark:text-green-100 dark:bg-green-700' : 'text-red-700 bg-red-100 dark:text-red-100 dark:bg-red-700'}}   rounded-full  ">
@@ -56,4 +56,9 @@
       </table>
     </div>
 
+        {{-- Paginacion --}}
+        <div class="mt-4">
+          {{-- {{ $products->onEachSide(1)->links('pagination::windmill-pagination') }} --}}
+          {{ $products->links() }}
+      </div>
   </div>

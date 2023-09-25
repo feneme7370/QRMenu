@@ -58,15 +58,21 @@
 
             <form class="grid gap-3 mt-5">
 
-                <x-sistem.forms.label-form for="name" value="{{ __('Nombre de categoria') }}" />
-                <x-sistem.forms.input-form id="name" type="name" placeholder="{{ __('Comidas, Bebidas, Etc.') }}" wire:model="name"
-                    autofocus />
-                <x-sistem.forms.input-error for="name" />
-
-                <x-sistem.forms.label-form for="description" value="{{ __('Descripcion') }}" />
-                <x-sistem.forms.textarea-form id="description" placeholder="{{ __('Comidas de todas las variedades, platos elaborados o para compartir entre amigos') }}"
-                    wire:model="description" />
-                <x-sistem.forms.input-error for="description" />
+                <div class="grid md:grid-cols-1 gap-3">
+                    <div>
+                        <x-sistem.forms.label-form for="name" value="{{ __('Nombre de categoria') }}" />
+                        <x-sistem.forms.input-form id="name" type="name" placeholder="{{ __('Comidas, Bebidas, Etc.') }}" wire:model="name"
+                            autofocus />
+                        <x-sistem.forms.input-error for="name" />
+                    </div>
+    
+                    <div>
+                        <x-sistem.forms.label-form for="description" value="{{ __('Descripcion') }}" />
+                        <x-sistem.forms.textarea-form id="description" placeholder="{{ __('Comidas de todas las variedades, platos elaborados o para compartir entre amigos') }}"
+                            wire:model="description" />
+                        <x-sistem.forms.input-error for="description" />
+                    </div>
+                </div>
 
                 <label for="status" class="flex items-center">
                     <x-sistem.forms.checkbox-form id="status" wire:model="status" />

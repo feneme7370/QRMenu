@@ -10,16 +10,18 @@
 
     {{-- input buscador y filtro de activos --}}
     {{-- <x-sistem.filter.search-active /> --}}
-    <div class="flex flex-col gap-4 md:flex-row md:justify-between md:items-end mb-5">
+    <div class="flex flex-col gap-4 md:flex-row md:justify-between md:items-center mb-5">
         <form {{-- method="POST" --}} class="grid gap-3 mt-5 w-full md:w-1/2">
 
-            <x-sistem.forms.label-form for="product_id" value="{{ __('Listado de productos') }}" />
-            <x-sistem.forms.select-form wire:model="product_id">
-                @foreach ($products as $product)
-                    <option value="{{$product->id}}">{{$product->name}}</option>
-                @endforeach
-            </x-sistem.forms.select-form>
-            <x-sistem.forms.input-error for="product_id" />
+            <div>
+                <x-sistem.forms.label-form for="product_id" value="{{ __('Listado de productos') }}" />
+                <x-sistem.forms.select-form wire:model="product_id">
+                    @foreach ($products as $product)
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </x-sistem.forms.select-form>
+                <x-sistem.forms.input-error for="product_id" />
+            </div>
 
         </form>
         <x-sistem.buttons.primary-btn

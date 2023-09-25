@@ -19,6 +19,7 @@ class Product extends Model
         'description',
         'suggested',
         'status',
+        'image',
         'subcategory_id',
         'company_id',
         'user_id',

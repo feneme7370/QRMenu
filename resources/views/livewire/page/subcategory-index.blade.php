@@ -57,23 +57,32 @@
 
             <form {{-- method="POST" --}} class="grid gap-3 mt-5">
 
-                <x-sistem.forms.label-form for="name" value="{{ __('Nombre') }}" />
-                <x-sistem.forms.input-form id="name" type="name" placeholder="{{ __('Pizzas, Gaseosas, Vinos, Etc.') }}" wire:model="name"
-                    autofocus />
-                <x-sistem.forms.input-error for="name" />
-
-                <x-sistem.forms.label-form for="category_id" value="{{ __('Categoria') }}" />
-                <x-sistem.forms.select-form wire:model="category_id">
-                    @foreach ($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                </x-sistem.forms.select-form>
-                <x-sistem.forms.input-error for="category_id" />
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div>
+                        <x-sistem.forms.label-form for="name" value="{{ __('Nombre') }}" />
+                        <x-sistem.forms.input-form id="name" type="name" placeholder="{{ __('Pizzas, Gaseosas, Vinos, Etc.') }}" wire:model="name"
+                            autofocus />
+                        <x-sistem.forms.input-error for="name" />
+                    </div>
+    
+                    <div>
+                        <x-sistem.forms.label-form for="category_id" value="{{ __('Categoria') }}" />
+                        <x-sistem.forms.select-form wire:model="category_id">
+                            @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </x-sistem.forms.select-form>
+                        <x-sistem.forms.input-error for="category_id" />
+                    </div>
+                    
+                </div>
                 
-                <x-sistem.forms.label-form for="description" value="{{ __('Descripcion') }}" />
-                <x-sistem.forms.textarea-form id="description" placeholder="{{ __('Pizzas de todas las variedades') }}"
-                    wire:model="description" />
-                <x-sistem.forms.input-error for="description" />
+                <div>
+                    <x-sistem.forms.label-form for="description" value="{{ __('Descripcion') }}" />
+                    <x-sistem.forms.textarea-form id="description" placeholder="{{ __('Pizzas de todas las variedades') }}"
+                        wire:model="description" />
+                    <x-sistem.forms.input-error for="description" />
+                </div>
 
                 <label for="status" class="flex items-center">
                     <x-sistem.forms.checkbox-form id="status" wire:model="status" />

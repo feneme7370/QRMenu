@@ -6,7 +6,7 @@
             <th class="px-4 py-3">ID</th>
             <th class="px-4 py-3">Producto</th>
             <th class="px-4 py-3">Estado</th>
-            <th class="px-4 py-3">Actiones</th>
+            <th class="px-4 py-3">Acciones</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">

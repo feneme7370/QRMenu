@@ -17,6 +17,7 @@ return new class extends Migration
             $table->double('price');
             $table->longText('description')->nullable();
             $table->tinyInteger('status')->nullable();
+            $table->string('image')->nullable();
             $table->foreignId('subcategory_id')->constrained()->onUpdate('cascade')->restrictOnDelete();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->restrictOnDelete();
             $table->foreignId('company_id')->constrained()->onUpdate('cascade')->restrictOnDelete();

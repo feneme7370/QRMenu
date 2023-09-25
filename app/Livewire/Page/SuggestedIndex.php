@@ -33,6 +33,11 @@ class SuggestedIndex extends Component
         }
     }
 
+    // renombrar variables a castellano
+    protected $validationAttributes = [
+        'product_id' => 'producto',
+    ];
+
     // comprobar que ya exista
     public function existSuggested() {
         $suggestedCreated = Suggested::where('company_id', auth()->user()->company_id)
